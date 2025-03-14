@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Sidebar from '../components/Sidebar';
 
 export default function Settings() {
@@ -46,6 +45,42 @@ export default function Settings() {
         </header>
 
         <div className="p-8">
+          {/* Settings Navigation */}
+          <div className="mb-6 flex space-x-4">
+            <button
+              onClick={() => setActiveTab('profile')}
+              className={`px-4 py-2 text-sm font-medium rounded-lg ${
+                activeTab === 'profile' ? 'bg-pink-500 text-white' : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Profile
+            </button>
+            <button
+              onClick={() => setActiveTab('notifications')}
+              className={`px-4 py-2 text-sm font-medium rounded-lg ${
+                activeTab === 'notifications' ? 'bg-pink-500 text-white' : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Notifications
+            </button>
+            <button
+              onClick={() => setActiveTab('security')}
+              className={`px-4 py-2 text-sm font-medium rounded-lg ${
+                activeTab === 'security' ? 'bg-pink-500 text-white' : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Security
+            </button>
+            <button
+              onClick={() => setActiveTab('billing')}
+              className={`px-4 py-2 text-sm font-medium rounded-lg ${
+                activeTab === 'billing' ? 'bg-pink-500 text-white' : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Billing
+            </button>
+          </div>
+
           {/* Settings Content */}
           <div className="grid grid-cols-12 gap-6">
             {/* Profile Settings */}
