@@ -1,18 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="flex justify-between items-center p-4">
-        <div className="text-xl font-semibold">
-          Event<span className="text-purple-600">-ip</span>
-        </div>
-        <div className="flex gap-4">
-          <button className="text-gray-600">Log in</button>
-          <button className="bg-gray-600 text-white px-4 py-1 rounded">Sign up</button>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <div className="relative h-[400px] bg-gradient-to-b from-purple-900 to-purple-700 text-white">
@@ -60,6 +54,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <EventCard
+              id={1}
               title="Urban Marathon"
               image="/urban.png"
               date="Monday, June 06 | 06:00 AM"
@@ -67,6 +62,7 @@ export default function Home() {
               price="$20"
             />
             <EventCard
+              id={2}
               title="Melody Mania"
               image="/melody.png"
               date="Wednesday, June 21 | 07:00 PM"
@@ -74,6 +70,7 @@ export default function Home() {
               price="$40"
             />
             <EventCard
+              id={3}
               title="Rockin' the Stage"
               image="/stage.png"
               date="Monday, March 14 | 04:00 PM"
@@ -104,6 +101,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <EventCard
+              id={4}
               title="Musical Fusion Festival"
               image="/festival.png"
               date="Monday, June 06 | 06:00 AM"
@@ -112,6 +110,7 @@ export default function Home() {
               large
             />
             <EventCard
+              id={5}
               title="Business in the United States"
               image="/business.png"
               date="Tuesday, June 7 | 06:00 AM"
@@ -131,6 +130,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <EventCard
+              id={6}
               title="Marathon"
               image="/marathon.png"
               date="Monday, June 06 | 06:00 AM"
@@ -138,6 +138,7 @@ export default function Home() {
               price="$125"
             />
             <EventCard
+              id={7}
               title="Rock Festival"
               image="/rock.png"
               date="Monday, March 21 | 06:00 PM"
@@ -145,6 +146,7 @@ export default function Home() {
               price="$175"
             />
             <EventCard
+              id={8}
               title="Harmony of Melodies Concert"
               image="/harmony.png"
               date="Wednesday, June 24 | 07:00 PM"
@@ -155,57 +157,15 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Event-ip</h3>
-              <p className="text-gray-400">All</p>
-              <p className="text-gray-400">Music</p>
-              <p className="text-gray-400">Sport</p>
-              <p className="text-gray-400">Exhibition</p>
-              <p className="text-gray-400">Photography</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Categories</h3>
-              <p className="text-gray-400">User guides</p>
-              <p className="text-gray-400">Help Center</p>
-              <p className="text-gray-400">Partners</p>
-              <p className="text-gray-400">News</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Company</h3>
-              <p className="text-gray-400">About</p>
-              <p className="text-gray-400">Join us</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Stay in the loop</h3>
-              <p className="text-gray-400 mb-4">For product announcements and exclusive insights</p>
-              <button className="bg-white text-gray-900 px-6 py-2 rounded">Subscribe</button>
-            </div>
-          </div>
-          <div className="mt-12 pt-8 border-t border-gray-800 flex justify-between items-center">
-            <select className="bg-transparent text-gray-400">
-              <option>English</option>
-            </select>
-            <div className="flex gap-4 text-gray-400">
-              <a href="#">Twitter</a>
-              <a href="#">Facebook</a>
-              <a href="#">Instagram</a>
-              <a href="#">YouTube</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
 
 // Event Card Component
-function EventCard({ title, image, date, location, price, large = false }) {
+function EventCard({ id = 1, title, image, date, location, price, large = false }) {
   return (
-    <div className={`bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow`}>
+    <Link href={`/events/${id}`} className={`block bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow`}>
       <div className={`relative ${large ? 'h-64' : 'h-48'}`}>
         <Image
           src={image}
@@ -221,7 +181,7 @@ function EventCard({ title, image, date, location, price, large = false }) {
         <p className="text-sm text-gray-600">{location}</p>
         <p className="text-sm text-gray-500 mt-2">From {price}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 
