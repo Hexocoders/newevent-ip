@@ -1,9 +1,20 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function SignIn() {
+  const router = useRouter();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add your authentication logic here
+    router.push('/dashboard');
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
@@ -21,7 +32,7 @@ export default function SignIn() {
           <p className="text-gray-500 text-center mb-8">Log in to your account</p>
 
           {/* Form */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -32,6 +43,7 @@ export default function SignIn() {
                 id="email"
                 placeholder="example.email@gmail.com"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                required
               />
             </div>
 
@@ -50,6 +62,7 @@ export default function SignIn() {
                 id="password"
                 placeholder="Enter your password"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
+                required
               />
               <button 
                 type="button"
@@ -111,7 +124,7 @@ export default function SignIn() {
           </div>
 
           {/* Sign Up Link */}
-          <p className="mt-8 text-center text-sm text-gray-600">
+          <p className="text-center mt-8">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-gray-600 hover:underline">
               Sign up
