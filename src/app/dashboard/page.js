@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 // Mock data for sales by event
 const salesData = [
@@ -82,8 +84,28 @@ const purchasesData = [
   }
 ];
 
-export default function Dashboard() {
+function DashboardContent() {
   const [sortBy, setSortBy] = useState('Sales');
+  const { user, signOut } = useAuth();
+  const [userData, setUserData] = useState(null);
+  
+  // Get user data from localStorage on component mount (client-side only)
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUserData(JSON.parse(storedUser));
+      }
+    } catch (error) {
+      console.error('Error reading from localStorage:', error);
+    }
+  }, []);
+  
+  // Extract user information
+  const firstName = userData?.first_name || 'User';
+  const lastName = userData?.last_name || '';
+  const email = userData?.email || '';
+  const fullName = `${firstName} ${lastName}`.trim();
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -168,19 +190,21 @@ export default function Dashboard() {
               <h1 className="text-2xl font-semibold">Dashboard</h1>
             </div>
             <div className="flex items-center gap-4">
-              <button className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">
+              <Link href="/create-event" className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">
                 + Create event
-              </button>
+              </Link>
               <button className="text-gray-400 hover:text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
               </button>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-gray-200"></div>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white font-medium">
+                  {firstName.charAt(0)}{lastName.charAt(0)}
+                </div>
                 <div>
-                  <div className="text-sm font-medium">Jennifer King</div>
-                  <div className="text-xs text-gray-500">@rightrealestate</div>
+                  <div className="text-sm font-medium">{fullName}</div>
+                  <div className="text-xs text-gray-500">{email}</div>
                 </div>
               </div>
             </div>
@@ -382,5 +406,13 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Dashboard() {
+  return (
+    <ProtectedRoute>
+      <DashboardContent />
+    </ProtectedRoute>
   );
 } 
